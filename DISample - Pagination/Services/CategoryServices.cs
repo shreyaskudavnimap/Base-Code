@@ -23,9 +23,9 @@ namespace Services
             _categoryRepo.EditCategory(categoryId, categoryName);
         }
 
-        public List<Category> GetCategoriesList(int pgStart, int pgLength, out int totalRecords)
+        public List<Category> GetCategoriesList(int pgStart, int pgLength, out int totalRecords, string searchValue)
         {
-            return _categoryRepo.GetCategoryList(pgStart, pgLength, out totalRecords);
+            return _categoryRepo.GetCategoryList(pgStart, pgLength, out totalRecords, searchValue);
         }
 
         public List<Category> GetCategoriesList(string categoryId)

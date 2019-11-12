@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Linq.Dynamic;
 using DISample.Filters;
+using System.Collections;
 
 namespace DISample.Controllers
 {
@@ -20,7 +21,7 @@ namespace DISample.Controllers
             _categoryService = categoryService;
         }
         
-        [CustomErrorFilter]
+        //[CustomErrorFilter]
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
@@ -58,17 +59,8 @@ namespace DISample.Controllers
             string sortDirection = Request["order[0][dir]"];
 
             // Call Category Service
-            var categoryList = _categoryService.GetCategoriesList(start, length,out totalRecords);
+            var categoryList = _categoryService.GetCategoriesList(start, length,out totalRecords, searchValue);
 
-            //Filtering
-            if (!string.IsNullOrEmpty(searchValue))
-            {
-                categoryList = categoryList.
-                    Where(x => x.ID.ToString().ToLower().Contains(searchValue.ToLower()) || x.CategoryName.ToLower().Contains(searchValue.ToLower())).ToList<Category>();
-            }
-            
-            int totalrows = categoryList.Count;
-            
             //Sorting
             categoryList = categoryList.OrderBy(sortColumnName + " " + sortDirection).ToList<Category>();
 

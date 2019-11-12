@@ -14,7 +14,7 @@ namespace Repository
 {
     public class GlobalRepository 
     {
-        public List<Category> GetCategoryList(int pgStart, int pgLength, out int totalRecords)
+        public List<Category> GetCategoryList(int pgStart, int pgLength, out int totalRecords, string searchValue)
         {
             dynamic result;
             string connectionString = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
@@ -23,6 +23,7 @@ namespace Repository
                 DynamicParameters param = new DynamicParameters();
                 param.Add("@START", pgStart);
                 param.Add("@LENGTH", pgLength);
+                param.Add("@SEARCH", searchValue);
                 param.Add("@TOTALRECORDS", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 result = connection.Query<Category>("usp_GetCategory", param, commandType: CommandType.StoredProcedure).ToList();
                 totalRecords = param.Get<int>("TOTALRECORDS");
