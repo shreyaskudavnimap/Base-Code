@@ -1,0 +1,11 @@
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Services.dll
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Services.pdb
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Models.dll
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Repository.dll
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Dapper.dll
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Models.pdb
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Repository.pdb
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\bin\Release\Dapper.xml
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\obj\Release\Services.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\obj\Release\Services.dll
+C:\Users\user\Desktop\Shreyas\DISample - Pagination\Services\obj\Release\Services.pdb
