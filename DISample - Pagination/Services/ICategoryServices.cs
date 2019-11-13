@@ -12,5 +12,7 @@ namespace Services
         List<Category> GetCategoriesList(int pgStart, int pgLength, out int totalRecords, string searchValue);
         List<Category> GetCategoriesList(string categoryId);
         void EditCategory(string categoryId, string categoryName);
+        void DeleteCategory(string categoryId);
+
     }
 }

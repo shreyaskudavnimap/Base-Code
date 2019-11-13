@@ -1,0 +1,77 @@
+﻿@model Models.Product
+
+@{
+    ViewBag.Title = "Create View";
+}
+
+<h2>Create View</h2>
+
+
+
+@Html.AntiForgeryToken()
+<form method="post" action="/Product/Create">
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2">Product Name</div>
+            <div class="col-md-10">
+                <input type="text" name="productName" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Category Name</div>
+            <div class="col-md-10">
+                <select class="form-control" name="categoryId">
+                    <option value="1">Languages</option>
+                    <option value="2">Operating System</option>
+                    <option value="3">Artificial Intelligence</option>
+                    <option value="4">Biometrics</option>
+                    <option value="5">Client/Server Computing</option>
+                    <option value="6">Databases</option>
+                    <option value="7">Distributed Computing</option>
+                    <option value="8">Electronic Technology</option>
+                    <option value="9">Green IT</option>
+                    <option value="11">Measurement</option>
+                    <option value="12">Nanotechnology</option>
+                    <option value="13">Pervasive Computing</option>
+                    <option value="14">Supercomputing</option>
+                    <option value="15">Transaction Processing</option>
+                    <option value="16">Virtualization</option>
+                    <option value="17">Vocations</option>
+                    <option value="18">Adapters/Cards</option>
+                    <option value="19">Buses</option>
+                    <option value="20">Connectors, Plugs and Sockets</option>
+                    <option value="21">Data Storage</option>
+                    <option value="22">Hardware Companies</option>
+                    <option value="23">Integrated Circuits (ICs)</option>
+                    <option value="24">Input Devices</option>
+                    <option value="25">Memory</option>
+                    <option value="26">Microprocessors</option>
+                    <option value="27">Motherboards</option>
+                    <option value="28">Networking Hardware</option>
+                    <option value="29">Output Devices</option>
+                    <option value="30">Performance</option>
+                    <option value="31">Peripheral Devices</option>
+                    <option value="32">Ports and Interfaces</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+</form>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

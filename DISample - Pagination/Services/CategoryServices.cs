@@ -32,5 +32,10 @@ namespace Services
         {
             return _categoryRepo.GetCategoryList(categoryId);
         }
+
+        public void DeleteCategory(string categoryId)
+        {
+            _categoryRepo.DeleteCategory(categoryId);
+        }
     }
 }

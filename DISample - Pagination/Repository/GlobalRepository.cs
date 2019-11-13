@@ -48,6 +48,20 @@ namespace Repository
             return result;
         }
 
+        public List<Product> GetProductById(string productId)
+        {
+            dynamic result;
+            string connectionString = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@ProductId", Convert.ToInt32(productId));
+            using (var connection = new SqlConnection(connectionString))
+            {
+                result = connection.Query<Product>("usp_GetProductMasterById", param, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return result;
+        }
+        
         public List<Category> GetCategoryList(string categoryId)
         {
             dynamic result;
@@ -74,6 +88,77 @@ namespace Repository
             }
             
         }
+
+        public void EditProduct(string productId, string productName)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@ProductId", Convert.ToInt32(productId));
+            param.Add("@ProductName", productName);
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Query<Product>("usp_EditProduct", param, commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
+        public void DeleteCategory(string categoryId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@CategoryId", Convert.ToInt32(categoryId));
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Query<Product>("usp_DeleteCategory", param, commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
+        public void DeleteProduct(string productId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@ProductId", Convert.ToInt32(productId));
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Query<Product>("usp_DeleteProduct", param, commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
+        public void CreateProduct(string newProductName, int categoryId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@NewProductName",newProductName);
+            param.Add("@CategoryId", Convert.ToInt32(categoryId));
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Query<Product>("usp_CreateProduct", param, commandType: CommandType.StoredProcedure);
+            }
+        }
+        
+        public List<Product> GetProductList(int pgStart, int pgLength, out int totalRecords, string searchValue, string sortBy)
+        {
+            dynamic result;
+            string connectionString = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+            using (var connection = new SqlConnection(connectionString))
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@START", pgStart);
+                param.Add("@LENGTH", pgLength);
+                param.Add("@SEARCH", searchValue);
+                param.Add("@SORT", sortBy);
+                param.Add("@TOTALRECORDS", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                result = connection.Query<Product>("usp_GetProductMaster", param, commandType: CommandType.StoredProcedure).ToList();
+                totalRecords = param.Get<int>("TOTALRECORDS");
+
+
+            }
+
+            return result;
+        }
+
     }
 
 }

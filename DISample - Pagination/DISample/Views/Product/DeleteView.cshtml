@@ -1,0 +1,33 @@
+﻿@model IEnumerable < Models.Product>
+@using System.Data.Entity;
+
+@{
+    ViewBag.Title = "Delete View";
+}
+
+
+@Html.AntiForgeryToken()
+
+<h2>Delete View</h2>
+
+<div>
+
+    <hr />
+    <form method="post" action="/Product/Delete">
+        @if (Model.Count() != 0)
+        {
+            foreach (var item in Model)
+            {
+                <h3>Are you sure you want to delete @item.ProductName?</h3>
+                <input type="hidden" class="form-control" name="productId" value='@item.ID' />
+            }
+        }
+
+
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </form>
+</div>

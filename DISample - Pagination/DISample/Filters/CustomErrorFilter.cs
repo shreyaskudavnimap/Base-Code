@@ -10,7 +10,7 @@ namespace DISample.Filters
     {
         public void OnException(ExceptionContext filterContext)
         {
-            throw new NotImplementedException();
+            string errorMsg = filterContext.Exception.Message;
         }
     }
 }

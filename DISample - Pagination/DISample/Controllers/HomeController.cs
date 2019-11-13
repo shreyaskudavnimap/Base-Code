@@ -15,12 +15,14 @@ namespace DISample.Controllers
     public class HomeController : Controller, IResultFilter
     {
         private ICategoryServices _categoryService;
-
-        public HomeController(ICategoryServices categoryService)
+        private IProductServices _productService;
+        
+        public HomeController(ICategoryServices categoryService, IProductServices productService)
         {
             _categoryService = categoryService;
+            _productService = productService;
         }
-        
+
         //[CustomErrorFilter]
         public ActionResult Index()
         {
@@ -35,7 +37,7 @@ namespace DISample.Controllers
             return View(categoryList);
         }
 
-        public ActionResult Edit([Bind(Prefix = "id")]string categoryId, [Bind(Prefix = "categoryName")]string categoryName)
+        public ActionResult Edit([Bind(Prefix = "id")]string categoryId, string categoryName)
         {
             _categoryService.EditCategory(categoryId, categoryName); // Update
             var categoryList = _categoryService.GetCategoriesList(categoryId);
@@ -44,9 +46,16 @@ namespace DISample.Controllers
             return View("EditView", categoryList);
         }
 
-        public ActionResult Delete([Bind(Prefix = "id")]string categoryId)
+        public ActionResult DeleteView([Bind(Prefix = "id")]string categoryId)
         {
-            return View();
+            var categoryList = _categoryService.GetCategoriesList(categoryId);
+            return View(categoryList);
+        }
+
+        public ActionResult Delete(string categoryId)
+        {
+            _categoryService.DeleteCategory(categoryId);
+            return RedirectToAction("Index");
         }
 
         public JsonResult EventPagination()
@@ -66,6 +75,12 @@ namespace DISample.Controllers
 
             return Json(new { data = categoryList, draw = Request["draw"], recordsTotal = totalRecords, recordsFiltered = totalRecords }, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult Product([Bind(Prefix = "id")]string categoryId)
+        {
+            var productList = _productService.GetProductList(categoryId);
+            return View(productList);
         }
 
     }

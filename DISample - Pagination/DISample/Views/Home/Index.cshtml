@@ -56,6 +56,7 @@
     </thead>
 </table>
 
+@*Delete Confirmation Modal*@
 @Html.Partial("~/Views/Modal/Delete.cshtml")
 
 
@@ -71,7 +72,7 @@
 
         function getProductFunc(id)
         {
-            window.location.href = '@Url.Action("Product", "Product")/' + id;
+            window.location.href = '@Url.Action("Product", "Home")/' + id;
         }
 
         function editFunc(id) {
@@ -79,8 +80,9 @@
         }
 
         function deleteFunc(id) {
-            $("input[name='deleteid']").val(id);
+            window.location.href = '@Url.Action("DeleteView", "Home")/' + id;
         }
+
         $(document).ready(function () {
             $("#employeetable").DataTable({
                 "ajax": {
@@ -106,7 +108,7 @@
                         "render": function (data, type, row, meta) {
                             if (type === 'display') {
                                 data ='<button type="button" class="btn btn-default" onclick="editFunc(' + row["ID"] + ')">Edit</button>'
-                                + '    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="deleteFunc(' + row["ID"] + ')">Delete</button>';
+                                + '    <button type="button" class="btn btn-default" onclick="deleteFunc(' + row["ID"] + ')">Delete</button>';
                             }
                             return data;
                         }

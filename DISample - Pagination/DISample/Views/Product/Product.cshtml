@@ -1,39 +1,100 @@
-﻿@model IEnumerable<Models.Product>
+﻿
 
 @{
-    ViewBag.Title = "Product";
+    ViewBag.Title = "Products";
 }
 
-<h2>Product</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "CreateView")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </th>
-        <th></th>
-    </tr>
+<table id="employeetable" class="ui celled table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Category Name</th>
+            <th>Action</th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
+        </tr>
+    </thead>
 </table>
+
+@*Delete Confirmation Modal*@
+@Html.Partial("~/Views/Modal/Delete.cshtml")
+
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.semanticui.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.semanticui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.js"></script>
+
+    <script>
+
+        function getProductFunc(id)
+        {
+            window.location.href = '@Url.Action("ProductDetail", "Product")/' + id;
+        }
+
+        function editFunc(id) {
+            window.location.href = '@Url.Action("EditView", "Product")/' + id;
+        }
+
+
+        function deleteFunc(id) {
+            window.location.href = '@Url.Action("DeleteView", "Product")/' + id;
+        }
+
+        $(document).ready(function () {
+            $("#employeetable").DataTable({
+                "ajax": {
+                    "url": "/Product/EventPagination",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "ID", "name": "ID" },
+                    {
+                        "data": "ProductName",
+                        "name": "ProductName",
+                        "render": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                //data = '<a href="#" onclick="getProductFunc(' + row["ID"] + ');" >' + data + '</a>';
+                                data = data;
+                            }
+                            return data;
+                        }
+                    },
+                    { "data": "CategoryName", "name": "CategoryName" },
+                    {
+                        "data": "ProductName",
+                        "name": "ProductName",
+                        "render": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                data ='<button type="button" class="btn btn-default" onclick="editFunc(' + row["ID"] + ')">Edit</button>'
+                                + '    <button type="button" class="btn btn-default" onclick="deleteFunc(' + row["ID"] + ')">Delete</button>';
+                            }
+                            return data;
+                        }
+                    }
+                ],
+
+                "serverSide": "true",
+                "order": [0, "asc"],
+                "processing": "true",
+                "language": {
+                    "processing": "processing... please wait"
+                }
+
+
+
+            });
+        });
+
+
+    </script>
+}
